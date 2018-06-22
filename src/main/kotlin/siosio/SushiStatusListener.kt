@@ -1,13 +1,17 @@
 package siosio
 
 import com.intellij.execution.testframework.*
-import com.intellij.execution.testframework.TestStatusListener
 import com.intellij.notification.*
+import com.intellij.openapi.project.*
 
 class SushiStatusListener : TestStatusListener() {
-    override fun testSuiteFinished(root: AbstractTestProxy?) {
+    
+    companion object {
+        val balloonGroup = NotificationGroup("test sushi notification", NotificationDisplayType.BALLOON, false)
+    }
+
+    override fun testSuiteFinished(root: AbstractTestProxy?, project: Project) {
         root?.let {
-            val balloonGroup = NotificationGroup.balloonGroup("test sushi notification")
             val notification = if (it.isPassed) {
                 balloonGroup.createNotification("Test Passed",
                         "\uD83C\uDF63".repeat(20),
@@ -17,8 +21,11 @@ class SushiStatusListener : TestStatusListener() {
                         "\uD83D\uDC1B".repeat(20),
                         NotificationType.ERROR, null)
             }
-            Notifications.Bus.notify(notification)
+            Notifications.Bus.notify(notification, project)
         }
+    }
+
+    override fun testSuiteFinished(root: AbstractTestProxy?) {
     }
     
 }
