@@ -24,9 +24,7 @@ intellij {
   version '182.3341.11'
 }
 patchPluginXml {
-  changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+  changeNotes ""
 }
 
 wrapper {
